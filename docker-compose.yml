@@ -1,0 +1,21 @@
+version: '2'
+services:
+  node_modules:
+    image: boomtownroi/data-volume:latest
+    volumes:
+      - react_node_modules:/www/node_modules
+  react:
+    build: .
+    volumes:
+      - .:/www
+    volumes_from:
+      - node_modules
+    working_dir: /www
+    environment:
+      NODE_ENV: 'docker'
+    command: /bin/bash -c "npm install && npm start"
+    ports:
+      - '3000:3000'
+      - '3001:3001'
+volumes:
+  react_node_modules:
